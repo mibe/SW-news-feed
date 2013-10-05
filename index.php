@@ -2,7 +2,7 @@
 
 // Config
 $CACHE_FILE = 'feed.xml';
-$CACHE_TIME = 60 * 60 * 24;				// 1 day
+$CACHE_TIME = 60 * 60 * 12;				// 12 hours
 
 header('Content-Type: application/rss+xml');
 
