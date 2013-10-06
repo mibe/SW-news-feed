@@ -39,6 +39,7 @@ foreach($entries as $entry)
 	$item->setTitle($entry->title);
 	$item->setLink($entry->url);
 	$item->setDescription($entry->message);
+	$item->setId($entry->id);
 
 	$feed->addItem($item);
 }
