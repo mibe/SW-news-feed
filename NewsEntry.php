@@ -6,6 +6,11 @@
 class NewsEntry
 {
 	/**
+	* Template for building the correct URL, depending on the supplied ID.
+	*/
+	const URL_TEMPLATE = 'http://www.schweinfurt.de/buergerinformationen/%d.html';
+	
+	/**
 	* ID of this entry.
 	*/
 	public $id;
@@ -21,24 +26,27 @@ class NewsEntry
 	public $message;
 
 	/**
-	* URL of this entry.
-	*/
-	public $url;
-
-	/**
 	* Constructor
 	*
 	* @param   int     ID
 	* @param   string  Title
 	* @param   string  Content
-	* @param   string  URL
 	*/
-	public function __construct($id, $title, $message, $url)
+	public function __construct($id, $title, $message)
 	{
 		$this->id = $id;
 		$this->title = $title;
 		$this->message = $message;
-		$this->url = $url;
+	}
+
+	/**
+	* Build the news detail URL for the given news ID.
+	*
+	* @return   string  URL to the news detail page.
+	*/
+	public function buildURL()
+	{
+		return sprintf(self::URL_TEMPLATE, $this->id);
 	}
 
 	public function __toString()
