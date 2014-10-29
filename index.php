@@ -7,7 +7,7 @@ $CACHE_TIME = 60 * 60 * 12;				// 12 hours
 header('Content-Type: application/rss+xml');
 
 $time = time();
-$filetime = filemtime($CACHE_FILE);
+$filetime = @filemtime($CACHE_FILE);
 
 // If we have a cache hit, output the cache file and exit
 if ($filetime !== FALSE && $time < $filetime + $CACHE_TIME)
@@ -32,12 +32,13 @@ $feed = new RSS2;
 
 $feed->setTitle('Schweinfurt - Bürgerinformationen');
 $feed->setLink('http://www.schweinfurt.de/buergerinformationen/index.html');
+$feed->setDescription('Die Bürgerinformationen der Stadt Schweinfurt');
 
 foreach($entries as $entry)
 {
 	$item = $feed->createNewItem();
 	$item->setTitle($entry->title);
-	$item->setLink($entry->url);
+	$item->setLink($entry->buildURL());
 	$item->setDescription($entry->message);
 	$item->setId($entry->id);
 

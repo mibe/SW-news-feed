@@ -15,7 +15,7 @@ class Scraper
 	/**
 	* Number of pages to be scraped.
 	*/
-	const PAGES = 3;
+	const PAGES = 1;
 
 	/**
 	* Scrapes all pages and returns the news items.
