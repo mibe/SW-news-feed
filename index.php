@@ -17,6 +17,7 @@ if ($filetime !== FALSE && $time < $filetime + $CACHE_TIME)
 }
 
 // Cache miss, so generate the feed
+set_time_limit(60);
 
 require_once('FeedWriter/Feed.php');
 require_once('FeedWriter/RSS2.php');
