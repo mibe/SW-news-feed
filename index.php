@@ -32,7 +32,7 @@ $entries = $scraper->getAllPages();
 $feed = new RSS2;
 
 $feed->setTitle('Schweinfurt - Bürgerinformationen');
-$feed->setLink('http://www.schweinfurt.de/buergerinformationen/index.html');
+$feed->setLink('https://www.schweinfurt.de/rathaus-politik/pressestelle/buergerinformationen/index.html');
 $feed->setDescription('Die Bürgerinformationen der Stadt Schweinfurt');
 
 foreach($entries as $entry)

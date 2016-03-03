@@ -10,7 +10,7 @@ class Scraper
 	/**
 	* URL which contains the news. Contains printf format string for page number.
 	*/
-	const URL_TEMPLATE = 'http://www.schweinfurt.de/buergerinformationen/index.html?art_pager=%d';
+	const URL_TEMPLATE = 'https://www.schweinfurt.de/rathaus-politik/pressestelle/buergerinformationen/index.html?art_pager=%d';
 
 	/**
 	* Number of pages to be scraped.

@@ -8,7 +8,7 @@ class NewsEntry
 	/**
 	* Template for building the correct URL, depending on the supplied ID.
 	*/
-	const URL_TEMPLATE = 'http://www.schweinfurt.de/buergerinformationen/%d.html';
+	const URL_TEMPLATE = 'https://www.schweinfurt.de/rathaus-politik/pressestelle/buergerinformationen/%d.html';
 	
 	/**
 	* ID of this entry.

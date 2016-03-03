@@ -9,8 +9,8 @@ require_once('NewsEntry.php');
 class HtmlExtractor
 {
 	private $xpath;
-	private $query = '/html/body/div/div[3]/div/div[3]/*[@class="artikeluebersicht"]';
-	private $queryDetail = '/html/body/div/div[3]/div/div[3]/div/div[3]/*';
+	private $query = '/html/body/div/div[3]/div/div[3]/div/*[@class="artikel-uebersicht"]';
+	private $queryDetail = '/html/body/div/div[3]/div/div[3]/div/div[2]/div[3]/*';
 	private $dom;
 	private $newsIdRegex = '/\/(\d+)\./';		//	"/3141."
 
@@ -70,7 +70,7 @@ class HtmlExtractor
 	*/
 	private function getNewsEntry($node)
 	{
-		$a = $node->firstChild->firstChild->firstChild;
+		$a = $node->firstChild->firstChild->nextSibling->firstChild;
 
 		// get title from the HTML elements
 		$newsTitle = $a->attributes->getNamedItem('title')->nodeValue;
@@ -81,21 +81,24 @@ class HtmlExtractor
 
 		// the news message is somewhat trickier, because it is nested in multiple paragraph elements
 		$newsMessage = '';
-		$p = $node->firstChild->firstChild->nextSibling;
+		$p = $node->firstChild->firstChild->nextSibling->nextSibling->firstChild;
 
-		do
+		if ($p != null && $p->nodeName == 'p')
 		{
-			// The date (dd.mm.yyyy) is /usually/ in the first paragraph. We don't want that,
-			// so only fill $newsMessage when the paragraph does not contain a date.
-			if (preg_match('/\d{2}\.\d{2}\.\d{4}/', $p->nodeValue) == 0)
+			do
 			{
-				// Add a new paragraph as soon as there was suitable text in the last paragraph.
-				if (strlen($newsMessage) != 0)
-					$newsMessage .= "\r\n\r\n";
+				// The date (dd.mm.yyyy) is /usually/ in the first paragraph. We don't want that,
+				// so only fill $newsMessage when the paragraph does not contain a date.
+				if (preg_match('/\d{2}\.\d{2}\.\d{4}/', $p->nodeValue) == 0)
+				{
+					// Add a new paragraph as soon as there was suitable text in the last paragraph.
+					if (strlen($newsMessage) != 0)
+						$newsMessage .= "\r\n\r\n";
 
-				$newsMessage .= $p->nodeValue;
-			}
-		} while(($p = $p->nextSibling) != null && $p->nodeName == 'p');
+					$newsMessage .= $p->nodeValue;
+				}
+			} while(($p = $p->nextSibling) != null && $p->nodeName == 'p');
+		}
 
 		$result = new NewsEntry($newsId, $newsTitle, $newsMessage);
 
